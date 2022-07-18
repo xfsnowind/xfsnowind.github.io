@@ -1,0 +1,4 @@
+baseURL = 'https://xfsnowind.github.io'
+languageCode = 'en-us'
+title = 'xfsnowind site'
+theme = "hugo-clarity"
