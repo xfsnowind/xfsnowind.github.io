@@ -1,0 +1,37 @@
+[[main]]
+  name = "主页"
+  url = ""
+  weight = -110
+
+# Submenus are done this way: parent -> identifier
+[[main]]
+  name = "博客"
+  url = "blogs"
+  identifier = "blogs"
+  weight = -109
+
+[[main]]
+  name = "关于"
+  url = "about"
+  weight = -107
+
+# social menu links
+
+[[social]]
+  name = "github"
+  type = "social"
+  weight = 1
+  url = "https://github.com/xfsnowind"
+[[social]]
+  name = "twitter"
+  weight = 2
+  url = "https://twitter.com/xfsnowind"
+[[social]]
+  name = "linkedin"
+  weight = 3
+  url = "https://www.linkedin.com/in/feng-xue-60175a37/"
+[[social]]
+  name = "rss"
+  weight = 4
+  url = "index.xml"
+
