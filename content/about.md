@@ -1,7 +1,8 @@
 ---
 title: "About"
 date: 2022-07-26T21:13:35+02:00
-draft: true
+author: "Feng Xue"
+draft: false
 ---
 
-about me
+I am a full stack developer and I would record some technical ideas and articles here. And it may also post some flash time in life.
