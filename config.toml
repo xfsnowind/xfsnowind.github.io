@@ -11,6 +11,8 @@ defaultContentLanguage = "en"
 # [menus]
 # config/_default/menus/menu.xx.toml
 
+disqusShortname = 'xfsnowind'
+
 [taxonomies]
 category = "categories"
 tag = "tags"
