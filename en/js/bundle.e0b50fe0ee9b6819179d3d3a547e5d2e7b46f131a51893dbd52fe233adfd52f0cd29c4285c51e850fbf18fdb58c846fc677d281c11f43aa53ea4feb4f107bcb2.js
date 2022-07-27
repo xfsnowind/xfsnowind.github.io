@@ -26,9 +26,9 @@ const noMatchesFound = 'No results found';
 const doc = document.documentElement;
 const inline = ":inline";
 // variables read from your hugo configuration
-let showImagePosition = "<no value>";
+let showImagePosition = "false";
 
-const showImagePositionLabel = '<no value>';
+const showImagePositionLabel = 'Figure';
 
 function isObj(obj) {
   return (obj && typeof obj === 'object' && obj !== null) ? true : false;
