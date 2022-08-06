@@ -3,6 +3,7 @@ title: "Promise"
 date: 2022-08-06T22:30:08+02:00
 author: "Feng Xue"
 draft: false
+toc: true
 ---
 
 Promise is a general concept to handle the asynchronize development in javascript. It's not hard to use, but when it comes with some other concepts, like react's hook, its internal chain etc. It always takes me some time to think through it. Especially when check the code of some open-source libraries, find the way they use Promise is quite fancy and also hard to understand, which reminders me that I am still stay on the level of using, far away from deep understanding.
