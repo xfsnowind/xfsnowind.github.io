@@ -7,10 +7,10 @@ draft: false
 
 The techniques and some project I plan to learn or finish:
 
-* gRPC vs REST -- get som knowledge of gRPC
+* gRPC vs REST -- get some knowledge of gRPC
 * Esbuild, vite, svelte -- understand the difference of vite and esbuild, apply esbuild for develop and webpack for production
 * webpack hotload
-* Es6 es7 -- get overview of ES6 and ES7
+* ES6 ES7 -- get overview of ES6 and ES7
 * Command kitty -- get familiar with kitty
 * material design -- get to know how to use material design
 * Flutter react native -- get some overview of mobile development
@@ -23,5 +23,5 @@ The techniques and some project I plan to learn or finish:
 * Regular express forward -- deep learn the regex forward again
 * Terraform -- get knowledge of it
 * [Promise](/blogs/promise/) -- write promise self with different js tech until not forget it any more
-* kerbenetes
+* Kubernetes
 
