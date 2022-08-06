@@ -22,6 +22,6 @@ The techniques and some project I plan to learn or finish:
 * http headers -- go through the http headers to get an overview
 * Regular express forward -- deep learn the regex forward again
 * Terraform -- get knowledge of it
-* Promise -- write promise self with different js tech until not forget it any more
+* [Promise](/blogs/promise/) -- write promise self with different js tech until not forget it any more
 * kerbenetes
 
