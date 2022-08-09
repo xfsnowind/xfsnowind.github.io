@@ -13,9 +13,9 @@ The techniques and some project I plan to learn or finish:
 * ES6 ES7 -- get overview of ES6 and ES7
 * Command kitty -- get familiar with kitty
 * material design -- get to know how to use material design
-* Flutter react native -- get some overview of mobile development
-* React-hook form website -- use react-hook-form to generate a full form again and deploy
-* Hugo personal github page -- improve the blog
+* Flutter vs React Native -- get some overview of mobile development
+* React-hook form website with react, redux -- use react-hook-form to generate a full form again and deploy
+* Hugo personal github page -- [xfsnowind](https://xfsnowind.github.io)
 * React long lists -- how to render the long list if it's over 1 million
 * Go through test framework of js, jest, react-testing-library -- review the test library of js
 * Blog for learning geektime -- learning some topics throught geektime
