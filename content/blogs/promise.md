@@ -2,6 +2,7 @@
 title: "Promise"
 date: 2022-08-06T22:30:08+02:00
 author: "Feng Xue"
+tags: ["Javascript", "Promise"]
 draft: false
 toc: true
 ---
