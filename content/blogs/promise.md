@@ -1,5 +1,5 @@
 ---
-title: "Promise"
+title: "Promise implementation"
 date: 2022-08-06T22:30:08+02:00
 author: "Feng Xue"
 tags: ["Javascript", "Promise"]
@@ -518,7 +518,8 @@ function resolvePromise(promise, x, resolve2, reject2) {
       let then = x.then;
 
       if (isFunction(then)) {
-        then.call( // 2.3.3.3
+        then.call(
+          // 2.3.3.3
           x,
           function (y) {
             if (called) return; // 2.3.3.3.3
@@ -548,6 +549,7 @@ function resolvePromise(promise, x, resolve2, reject2) {
 ## Test
 
 Now we have implemented all the mandatory codes, we can run the test the codes with npm lib [promises-aplus-tests](https://www.npmjs.com/package/promises-aplus-tests).
+
 ```bash
 npm i -g promises-aplus-tests
 promises-aplus-tests promise1.js // promise1.js is the file name
@@ -562,3 +564,37 @@ This solution is not perfect and it just simply follows the rules of Promise/A+ 
 Besides, this version just completes the basic part. Promise also has `resolve`, `catch`, `finally`, etc. I will implement them as well and write another article about them.
 
 Thanks to [this article](https://developpaper.com/source-code-implementation-of-promise-perfect-in-accordance-with-promise-a-specification/), which inspires me to make decision to implement the Promise and [Zhi Sun's article](https://medium.com/swlh/implement-a-simple-promise-in-javascript-20c9705f197a), which reminders me of taking steps to implement the hard part.
+
+---------------------- UPDATE ----------------------
+
+Instead prototype, I have implemented the Promise with javascript class, which is not the feature of ES5, therefore, we need to compile it with babel and test with nodejs. And the code logic is almost the same with the version 1. Here is the [code](https://github.com/xfsnowind/promise-implementation/tree/main/classVersion).
+
+There are two things we need to take care when using class:
+
+1. When we pass the `#internalResolve/#internalReject` functions which are defined as class private methods, to `executor`, we need to use `bind` to bind the function with class's instance or `this`, since we use `this` inside of `#internalResolve/#internalReject`. Codes are:
+
+```javascript
+constructor(executor) {
+  try {
+    executor(
+      this.#internalResolve.bind(this),
+      this.#internalReject.bind(this)
+    );
+  } catch (err) {
+    this.#internalReject(err);
+  }
+}
+
+#internalResolve(value) {
+  if (this.#state == STATE.PENDING) {
+    // ...
+  }
+}
+
+#internalReject(reason) {
+  if (this.#state == STATE.PENDING) {
+    //...
+  }
+}
+```
+2. Be careful for `this` especially when we create functions inside of class methods. It's best to define a variable and assign `this` to it, like `self`.
