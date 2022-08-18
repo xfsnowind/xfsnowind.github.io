@@ -1,5 +1,5 @@
 ---
-title: "Learning Note - React Hooks"
+title: "Learning Notes - React Hooks"
 date: 2022-08-09T20:27:47+02:00
 author: "Feng Xue"
 tags: ["Javascript", "React Hooks", "Learning Notes"]
