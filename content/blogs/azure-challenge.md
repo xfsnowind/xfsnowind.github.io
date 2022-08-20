@@ -109,5 +109,163 @@ But we can mix some features to solve the problems with a few exceptions.
 | Support unshared dedicated inbound address for your app | App-assigned address |
 | Restrict access to your app from a set of well-defined addresses | Access restrictions |
 
+## Scale apps in Azure App Service
 
-To Be Continued...
+### Target
+
+> Learn how autoscale operates in App Service and how to identify autoscale factors, enable autoscale, and how to create sound autoscale conditions.
+
+### Autoscale factors
+
+Autoscaling can be triggered by defined rules and also deallocate resources when workload has diminished.
+
+Azure provides two options for autoscaling:
+* Scale based on a metric, like:
+  * CPU Percentage. 
+  * Memory Percentage.
+  * Disk Queue Length.
+  * Http Queue Length.
+  * Data In.
+  * Data Out.
+* Scale to a specific instance count according to a schedule. For example, you can arrange to scale out at a particular time of day, or on a specific date or day of the week. You also specify an end date, and the system will scale back in at this time.
+
+
+## Azure App Service deployment slots
+
+### Target
+
+> In this module you will learn how slot swapping operates and how to perform a swap. You will also learn how to route traffic to different slots manually and automatically.
+
+### Explore staging environments
+
+Deployment slot is supported in the **Standard, Premium, or Isolated** App Service plan tier.
+
+The benefits to have the non-production deployment slot is 
+* validate the app changes in the staging environment
+* Deploy an app and swap with production deployment can eliminate the downtime
+* Easy to swap back to the last good site if the swapped one is not as we expected
+
+## Explore Azure Functions
+
+### Target
+
+> Learn how Azure Functions can be a great solution for data processing, systems integration, and building simple APIs and microservices.
+
+### TBC
+
+## Develop for Azure Cache for Redis
+
+### Target
+
+> Learn how to configure Azure Cache for Redis, interact with the cache, and connect an application to Azure Cache for Redis by using .NET.
+
+### Scenarios
+
+| Pattern | Description |
+|---|---|
+| Data cache | Databases are often too large to load directly into a cache. It's common to use the cache-aside pattern to load data into the cache only as needed. When the system makes changes to the data, the system can also update the cache, which is then distributed to other clients. |
+| Content cache | For static content for template. We can use in-memory cache to provide quick access |
+| Session store | Commonly used in shopping carts or user history data that might associate with cookie. But the data is too large for cookie. We can use Cookie as a key to query the data in in-memory cache, to associate information with a user quickly. |
+| Job and message queuing | Applications often add tasks to a queue when the operations associated with the request take time to execute. Longer running operations are queued to be processed in sequence, often by another server. This method of deferring work is called task queuing. |
+| Distributed transactions | Azure Cache for Redis supports executing a batch of commands as a single transaction. |
+
+### Configuration
+
+Recommend always use **Standard** or **Premium** Tier for production system.
+
+With Premium tier, you get supports: 
+1. Virtual Network 
+2. Clustering
+
+
+The access key is like the password to cache. There are a primary and a secondary key, we can use either, but we should update the key periodically. 
+
+## Implement Azure Key Vault
+
+### Target
+
+> Learn how Azure Key Vault can help you keep your apps more secure, and how to set and retrieve secrets by using the Azure CLI.
+
+### Explore Azure Key Vault
+
+The Azure Key Vault service supports two types of containers: vaults and managed hardware security module(HSM) pools.
+
+Azure Key vault would manage:
+* Secrets - tokens, passwords, certificates, API keys, and other secrets
+* Key - encryption keys used to encrypt your data.
+* Certificate - public and private Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates
+
+A Premium tier would include hardware security module(HSM)-protected keys.
+
+Benefites:
+* Centralized application secrets
+* Securely store secrets and keys
+* Monitor access and use
+* Simplified administration of application secrets
+
+Best Practices:
+* **Use separate key vaults**: Recommended to use a vault per application per environment (Development, Pre-Production and Production).
+
+* **Control access to your vault**: Key Vault data is sensitive and business critical, you need to secure access to your key vaults by allowing only authorized applications and users.
+
+* **Backup**: Create regular back ups of your vault on update/delete/create of objects within a Vault.
+
+* **Logging**: Be sure to turn on logging and alerts.
+
+* **Recovery options**: Turn on soft-delete and purge protection if you want to guard against force deletion of the secret.
+
+### Authenticate to Azure Key Vault
+
+Authentication with Key Vault works in conjunction with Azure Active Directory, which is responsible for authenticating the identity of any given security principal.
+
+Access tokens must be sent to the service using the HTTP Authorization header:
+
+```bash
+PUT /keys/MYKEY?api-version=<api_version>  HTTP/1.1  
+Authorization: Bearer <access_token>
+```
+
+## Explore Azure Cosmos DB
+
+### Target
+
+> Learn the core features and functionality of Azure Cosmos DB.
+
+### Benefits
+
+* Unlimited elastic write and read scalability.
+* **99.999%** read and write availability all around the world.
+* Guaranteed reads and writes served in less than **10 milliseconds at the 99th percentile**.
+
+### Explore the resource hierarchy
+
+hierarchy of different entities in an Azure Cosmos DB account
+
+![Cosmos entities](/images/azure/cosmos-entities.png "Cosmos entities")
+
+An Azure Cosmos database is mapped to various API-specific entities:
+
+| Azure Cosmos entity | SQL API | Cassandra API | Azure Cosmos DB API for MongoDB | Gremlin API | Table API |
+|---|---|---|---|---|---|
+| Azure Cosmos database | Database | Keyspace | Database | Database | N/A |
+
+The mapping of API-specific entities to an Azure Cosmos item:
+
+| Cosmos entity | SQL API | Cassandra API | Azure Cosmos DB API for MongoDB | Gremlin API | Table API |
+|---|---|---|---|---|---|
+| Azure Cosmos item | Item | Row | Document | Node or edge | Item |
+
+### Consistency
+
+With Azure Cosmos DB, developers can choose from five well-defined consistency models on the consistency spectrum. From strongest to more relaxed, the models include:
+
+* strong
+* bounded staleness
+* session
+* consistent prefix
+* eventual
+
+![Five Consistency Levels](/images/azure/five-consistency-levels.png "Five Consistency Levels")
+
+
+# To Be Continued...
