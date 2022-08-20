@@ -3,9 +3,9 @@ title: "Learning Notes - React Hooks"
 date: 2022-08-07T14:50:28+02:00
 author: "Feng Xue"
 tags: ["Javascript", "React Hooks", "Learning Notes"]
-draft: false
 toc: true
 usePageBundles: false
+draft: false
 ---
 
 This article is a summary when I learned the React Hooks course in GeekTime. Even though we all use React Hooks in the frontend development, I cannot say I understand the internal core and logic of it. So this is a good time to re-learn it through this course. According to my experience, it's definitely better to write down the idea and thoughts down -- The palest ink is better than the best memory. Therefore have this article. And I would follow the course's original structure to organize the article.

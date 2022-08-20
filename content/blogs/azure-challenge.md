@@ -2,8 +2,9 @@
 title: "Learning Notes - Azure Challenge"
 date: 2022-08-18T13:48:36+02:00
 author: "Feng Xue"
-toc: true
 tags: ["Learning Notes", "Azure"]
+toc: true
+usePageBundles: false
 draft: false
 ---
 
