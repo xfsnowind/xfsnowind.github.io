@@ -146,13 +146,6 @@ The benefits to have the non-production deployment slot is
 * Deploy an app and swap with production deployment can eliminate the downtime
 * Easy to swap back to the last good site if the swapped one is not as we expected
 
-## Explore Azure Functions
-
-### Target
-
-> Learn how Azure Functions can be a great solution for data processing, systems integration, and building simple APIs and microservices.
-
-### TBC
 
 ## Develop for Azure Cache for Redis
 
@@ -242,7 +235,7 @@ Authorization: Bearer <access_token>
 
 hierarchy of different entities in an Azure Cosmos DB account
 
-![Cosmos entities](/images/azure/cosmos-entities.png "Cosmos entities")
+![Cosmos entities, From azure official](/images/azure/cosmos-entities.png "Cosmos entities")
 
 An Azure Cosmos database is mapped to various API-specific entities:
 
@@ -266,7 +259,80 @@ With Azure Cosmos DB, developers can choose from five well-defined consistency m
 * consistent prefix
 * eventual
 
-![Five Consistency Levels](/images/azure/five-consistency-levels.png "Five Consistency Levels")
+![Five Consistency Levels From azure official](/images/azure/five-consistency-levels.png "Five Consistency Levels")
 
+### TBC
 
-# To Be Continued...
+## Explore the Microsoft identity platform
+
+### Target
+
+> Learn the core features and functionality of the Microsoft identity platform which includes authentication service, open-source libraries, and application management tools to enable and control access to resources.
+
+### Components
+
+Microsoft identity platform consist of several components:
+
+* **OAuth 2.0 and OpenID Connect standard-compliant authentication service** enabling developers to authenticate several identity types, including:
+
+  * Work or school accounts, provisioned through Azure Active Directory
+  * Personal Microsoft account, like Skype, Xbox, and Outlook.com
+  * Social or local accounts, by using Azure Active Directory B2C
+
+* **Open-source libraries**: Microsoft Authentication Libraries (MSAL) and support for other standards-compliant libraries
+* **Application management portal**
+* **Application configuration API and PowerShell**
+
+### Service principals
+
+An application must be registered with an **Azure Active Directory** tenant.
+
+## Create and deploy Azure Resource Manager templates
+
+### Target
+
+> Learn how Azure Resource Manager (ARM) can help streamline deployments, choose the correct deployment mode for your solution, and create and deploy an ARM template.
+
+![Azure Resource Manager role](/images/azure/consistent-management-layer.png "Azure Resource Manager role")
+
+## Microsoft Graph
+
+### Target
+
+> Learn how Microsoft Graph facilitates the access and flow of data and how to form queries through REST and code
+
+Microsoft Graph is the gateway to data and intelligence in Microsoft 365. It provides a unified programmability model that you can use to access the tremendous amount of data in Microsoft 365, Windows 10, and Enterprise Mobility + Security.
+
+Three main components to access and facilitate data:
+* The Microsoft Graph API offers a single endpoint, https://graph.microsoft.com
+* Microsoft Graph connectors
+* Microsoft Graph Data Connect
+
+### Best practices
+
+Consent and authorization:
+* Use least privilege
+* Use the correct permission type based on scenarios.
+* Consider the end user and admin experience.
+* Consider multi-tenant applications.
+
+Handle responses effectively
+* Pagination
+* Evolvable enumerations
+
+## Provision virtual machines in Azure
+
+### Target
+
+> Learn the availability and sizing options of Azure Virtual Machines, and how to create a virtual machine by using the Azure CLI.
+
+### Explore Azure virtual machines
+
+Design considerations for virtual machine creation:
+* Availability
+* VM size
+* VM limits - The current limit on a per subscription basis is 20 VMs per region
+* VM image
+* VM disks
+  * Standard disks - HDDs, deal for a cost effective dev and test workload
+  * Premium disks - SSD, Perfect for VMs running production workload.
