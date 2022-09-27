@@ -1,11 +1,11 @@
 ---
 title: "How to implement a FolderFlip with React"
-date: 2022-09-27T11:15:24
+date: 2022-09-27T11:15:24+08:00
 author: "Feng Xue"
-draft: false
-usePageBundles: false
-toc: true
 tags: ["Javascript", "React", "FolderFlip", "Frontend"]
+toc: true
+usePageBundles: false
+draft: false
 ---
 
 Haven't updated the blogs for a long time. Just had been struggling on the house work during the whole summer time, painting external and internal wall, new bathroom and etc. But there is still the good news, implemented an interesting frontend component with React, which would inspired by [lifeatspotify](http://lifeatspotify.com/) - borrow the name `FolderFlip`.
@@ -20,7 +20,7 @@ The original idea was come up with by the UX designer in our team, she would lik
 
 After investing, I found it can be done with the css feature `position: sticky` and javascript's `IntersectionObserver`.
 
-### Tip: `position: sticky`
+## Tip: `position: sticky`
 
 This is not a new feature, but I rarely used it before because of not fully supported by all the browsers before. But now definitely it's supported by all the main stream browsers. Check [CanIUse](https://caniuse.com/?search=position%3Asticky).
 
@@ -64,7 +64,7 @@ Here there is one thing I would like to mention. When we use `position: sticky`,
 
 OK, now it seems we have fixed the most important feature of the component. Nja, kind of. Actually, maybe you have found it when we keep scrolling down (there are some texts under the list as well) and beyond the list, the titles are still sticky and only contents move up. Definitely the title should move together with contents fluently. How do we solve this?
 
-### Floating with IntersectionObserver
+## Floating with IntersectionObserver
 
 It comes the js API `IntersectionObserver`, which observes how the node intersects with the specified master node (defaultly and normally it's the screen) in the non-main process. For detail and description, you can check [Mozilla's doc](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
@@ -143,12 +143,12 @@ And we can use this hooks to observe the last item of the list.
 
   ...
 
-  return <React.Fragment>
+  return (<React.Fragment>
   <div
     className="FolderFlip-Content"
     ref={stepLength - 1 == idx ? textRef : undefined}
     ></div>
-  </React.Fragment>
+  </React.Fragment>)
 ```
 
 Notice that the textRef is a React `ref` which would not trigger the execution of `useEffect` when it changes.
@@ -162,7 +162,7 @@ Notice that the textRef is a React `ref` which would not trigger the execution o
 
 Now we can see when we keep scrolling down, the whole items move out of the screen fluently.
 
-### What if more items?
+## What if more items?
 
 Till now, we have implemented the component. And maybe someone has noticed that we have only three items in the example, what if there are more items, like 6 or more? And actually the title of items would take over the whole screen, the content of the item would only have a very small part of the screen or even cannot show, especially in mobile. How could we fix that?
 
