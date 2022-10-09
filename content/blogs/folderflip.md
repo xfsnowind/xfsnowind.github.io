@@ -13,9 +13,7 @@ Haven't updated the blogs for a long time. Just had been struggling on the house
 The original idea was come up with by the UX designer in our team, she would like to develop a fancy component which can be used to present the company culture. Here is how it looks like:
 
 <div style="text-align:center;">
-  <video width="600" height="600" controls>
-    <source src="/images/folderflip/screenrecord.mp4" type="video/mp4">
-  </video>
+  <img src="https://media.giphy.com/media/U9L5AabQAfOUxsds49/giphy.gif">
 </div>
 
 After investing, I found it can be done with the css feature `position: sticky` and javascript's `IntersectionObserver`.
