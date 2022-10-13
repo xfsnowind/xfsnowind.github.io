@@ -1,6 +1,6 @@
 ---
 title: "Folderflip Version2"
-date: 2022-10-13T22:13:55+02:00
+date: 2022-10-13T22:55:11+08:00
 author: "Feng Xue"
 tags: ["Javascript", "React", "FolderFlip", "Frontend"]
 toc: true
