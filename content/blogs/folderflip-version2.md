@@ -1,5 +1,5 @@
 ---
-title: "Folderflip Version2"
+title: "How to implement a FolderFlip 2"
 date: 2022-10-13T22:55:11+08:00
 author: "Feng Xue"
 tags: ["Javascript", "React", "FolderFlip", "Frontend"]
@@ -15,7 +15,7 @@ As we presented in the [previous article](/blogs/folderflip/), we have showed ho
 But it only allows limited number, if it comes more items or the screen is smaller, the items would not be able to scroll. So how would we display if the items are more and the titles take most of the screen.
 
 <div style="text-align:center;">
-  <img src="/images/folderflip/Folderflip-6items.png" alt="Folder Flip with 6 items" width="400"/>
+  <img src="/images/folderflip/FolderFlip-6items.png" alt="Folder Flip with 6 items" width="400"/>
 </div>
 
 ## Clear the logic first
