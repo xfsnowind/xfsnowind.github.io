@@ -24,4 +24,5 @@ The techniques and some project I plan to learn or finish:
 * Terraform -- get knowledge of it
 * [Promise](/blogs/promise/) -- write promise self with different js tech until not forget it any more
 * Kubernetes
+* [Folderflip](/blogs/folderflip/) and [version 2](/blogs/folderflip-version2/)
 
