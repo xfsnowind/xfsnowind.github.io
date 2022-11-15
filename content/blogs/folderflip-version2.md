@@ -8,6 +8,12 @@ usePageBundles: false
 draft: false
 ---
 
+## Update
+
+2022-11-15: add the images to explain the steps
+
+--------
+
 As we presented in the [previous article](/blogs/folderflip/), we have showed how to implement the FolderFlip with limited number (like 3) items with the `position: sticky` and `IntersectionObserver`. 
 
 ## The Problem
@@ -23,6 +29,17 @@ But it only allows limited number, if it comes more items or the screen is small
 If you want the final answer, just jump to [here](https://codesandbox.io/s/folder-flip-reducer-j8h6xz). Otherwises, I would explain the solutions and the procedures below, also some problems I met.
 
 The idea is we only display a certain number of items in the screen, when the items' number reaches the limit with scrolling down/up, the next/previous one would float out to leave the room for the new item, which can be implemented by changing `postion` to `relative` like what we have done in the [previous blog](https://xfsnowind.github.io/blogs/folderflip/#floating-with-intersectionobserver). So it's like the state transition. I call the state `sticky` before some item reaches the threshold, when it reaches, the whole component would transit to a state named `float`. And in the `float` state, the first item (according to the scroll direction) would be moved out of screen.
+
+<div style="text-align:center;">
+  <img src="/images/folderflip/steps.png" style="width:92%"/>
+</div>
+
+As we see in the graph, 
+1. when the `content3` hasn't reach 100% in the screen, the state should be `position: sticky`;
+2. If we scroll down and the `content3` reaches threshold `100%`, it changes to the state `position: relative`;
+   1. If we scroll up, then it will go back the state `position: sticky` again
+3. If we keep scrolling down until it reaches the threshold `0%` of `content4`, the state would be update to `position: sticky`
+   1. scroll up would go back the state `position: relative`
 
 And as we know, React is a declarative library, which means you just need to give the required state, React would render it for you anyway, you do not need to know how it's implemented. So it would be good to use state machine diagram to explain the different states and easy to convert the diagram to codes.
 

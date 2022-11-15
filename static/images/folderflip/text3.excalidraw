@@ -1,0 +1,46 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "version": 115,
+      "versionNonce": 1739784493,
+      "isDeleted": false,
+      "id": "jobiI5bZmffT04b0_-eKy",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 390.30101013183594,
+      "y": 220.3259735107422,
+      "strokeColor": "#c92a2a",
+      "backgroundColor": "transparent",
+      "width": 206,
+      "height": 50,
+      "seed": 1280003107,
+      "groupIds": [],
+      "strokeSharpness": "sharp",
+      "boundElements": [],
+      "updated": 1667728376006,
+      "link": null,
+      "locked": false,
+      "fontSize": 20,
+      "fontFamily": 1,
+      "text": "content 4 reaches 0\n-> position: sticky",
+      "baseline": 43,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "content 4 reaches 0\n-> position: sticky"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
