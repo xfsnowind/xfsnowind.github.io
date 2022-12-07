@@ -185,6 +185,6 @@ Finally, we need to the parent node to display the visible elements. This is the
 
 ## Deploy to Github pages
 
-You can check [Here](https://xfsnowind.github.io/react-virtualized-experiment/) for full codes, I have deployed it to github pages as well.
+You can check the source code [xfsnowind/react-virtualized-experiment](https://github.com/xfsnowind/react-virtualized-experiment), I also have deployed it to my blog [Here](https://xfsnowind.github.io/react-virtualized-experiment/).
 
 Actually, I have already deployed my own blog website by Hugo in Github Pages, then how could I deploy this app to a subpage of the website without effecting Hugo. Check [here](https://github.com/gitname/react-gh-pages) to deploy and [here](https://dev.to/dyarleniber/setting-up-a-ci-cd-workflow-on-github-actions-for-a-react-app-with-github-pages-and-codecov-4hnp) to add command to github actions.
