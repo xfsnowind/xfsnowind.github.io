@@ -6,4 +6,4 @@ comments: false
 draft: false
 ---
 
-I am a full stack developer and I would record some technical ideas and articles here. And it may also post some flash time in life.
+I am a full stack developer currently living in Singapore and would like to record some technical ideas and articles here to help myself remember and summarize all the knowledge. If the blogs can help you, it would also be my please.
