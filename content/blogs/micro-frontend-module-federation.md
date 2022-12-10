@@ -5,7 +5,9 @@ author: "Feng Xue"
 draft: true
 ---
 
-Nowadays, our fleet-web is a monolith frontend project which includes everything. It works currently but have some issues with other teams, like team delivery and picap. Team Delivery is working on the tab `Delivery` in the fleet-web page, it uses the same framework (React) and similar technologies with fleet-web, but it does not have any intersection with fleet-web in business. It has its own development libraries and release plan. But since its codes are still in the same src folder with fleet-web, which causes team delivery still stays inside of the fleet-web's release lifecycles. Therefore, we need to separate it from fleet-web with Microfrontend technology.
+Nowadays, I joined a frontend team in a new company in Singapore, the project is based on monorepo (you can find more about monorepo [here](https://monorepo.tools/)) and the tech lead maintains the project very well, keeping updating the main libraries to the latest version and keeping an eye on the new technology to improve the solution and codes. 
+
+When I invested the project, I found the project was not just a monorepo, but also a monolith frontend project which involves other project which is kidn of a historical problem. It works currently but have some issues for other team, let's call it Team D. Team D is working on one tab in the web page, it uses the same framework (React) and similar technologies, but it does not have any intersection with main project in business actually. It has its own development libraries and release plan. But since its codes are still in the same src folder with main project, which causes team D still stays inside of the main project's release lifecycles. Therefore, we need to separate it from Microfrontend technology.
 
 ## What is MicroFrontend
 
@@ -13,12 +15,15 @@ Microfrontend is a popular architechtural solution that helps large, complex mon
 
 ## What is Module federation
 
-One way to implement microfrontend in the application is module federation, a plugin of the webpack 5. It connects different applications during build time and share modules with each other during runtime. This allows each module to define and manage its own components, while still being able to use common libraries by other modules.
+One way to implement microfrontend in the application is [module federation](https://webpack.js.org/concepts/module-federation/), a plugin in the webpack 5. It connects different applications during build time and share modules with each other during runtime. This allows each module to define and manage its own components, while still being able to use common libraries by other modules.
 
-Actually there are other popular frameworks doing the microfrontend, like single-spa, bit, qiankun. The reason I choose module federation is:
-1. All the other frameworks are doing two things, organize the microfrontend services and connect these services together through importing. Since we already have our own application well-organized in a monorepo way, each module is dynamically imported with react new feature `React.lazy`. So what we need here actually is just the way of importing modules dynamically.
-2. Module federation is just a plugin of webpack 5, we do not need to install another library to enable microfrontend. It also saves us time to maintain the extra library
+Actually there are some other popular frameworks doing the microfrontend, like single-spa, bit, qiankun. The reason we choose module federation is:
+1. All the other frameworks are doing two things
+    1. organize the microfrontend services 
+    2. connect these services together through importing.
 
+    Since we already have our own application well-organized in a monorepo way, each module is dynamically imported by react new feature `React.lazy`. So what we need here actually is just the way of importing modules dynamically.
+2. Module federation is just a plugin of webpack 5, we do not need to install another library to enable microfrontend. It also saves us time to maintain the extra library.
 
 ## Migration with Module federation with Nx
 
@@ -32,10 +37,11 @@ module.exports = withModuleFederation({
   ...moduleFederationConfig,
 });
 ```
+But our fleet-web project's webpack has already been well configured, it comes some conflict if we use the methods from Nx.
 
 ### Configure host with original configuration
 
-But our fleet-web project's webpack has already been well configured, it comes some conflict if we use the methods from Nx. So instead of that, let's use the original module federation configuration.
+ So instead of that, let's use the original module federation configuration.
 
 ```js
 const { ModuleFederationPlugin } = require('webpack').container
@@ -69,7 +75,8 @@ module.exports = {
       },
     }),
     ...
-   ]};
+  ]
+};
 ```
 
 Here we only define the name in module federation plugin because we will use dynamic importing later. And we update the entry from `./src/index.tsx` to `'./src/bootstrap.tsx'`. It's because module federation needs an entrance to import the modules.
@@ -82,7 +89,7 @@ import('./index')
 
 ### Configure remote
 
-So the host part is finished, let's see how to create a remote project with Nx. In the root folder, run the following command. Here I named the project as `delivery-test`, feel free to change it if you want other name.
+So the host part is finished, let's see how to create a remote project with `Nx`. In the root folder, run the following command. Here I named the project as `delivery-test`, feel free to change it if you want other name.
 
 ```bash
 pnpm exec nx generate @nrwl/react:remote delivery-test
