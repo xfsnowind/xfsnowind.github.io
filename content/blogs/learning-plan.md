@@ -16,7 +16,7 @@ The techniques and some project I plan to learn or finish:
 * Flutter vs React Native -- get some overview of mobile development
 * React-hook form website with react, redux -- use react-hook-form to generate a full form again and deploy
 * Hugo personal github page -- [xfsnowind](https://xfsnowind.github.io)
-* React long lists -- react-window, react-virtual-window
+* [React long lists](https://xfsnowind.github.io/blogs/react-virtualized/) -- react-window, react-virtual-window
 * Go through test framework of js, jest, react-testing-library -- review the test library of js
 * Blog for learning geektime -- learning some topics throught geektime
 * http headers -- go through the http headers to get an overview
@@ -28,3 +28,4 @@ The techniques and some project I plan to learn or finish:
 * Google map knowledge
 * Monorepo vs polyrepo
 * Micro Frontend - module federation, single-spa
+* VIM Advanced
