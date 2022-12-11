@@ -1,8 +1,11 @@
 ---
-title: "Micro Frontend Module Federation"
-date: 2022-12-05T16:50:28+08:00
+title: "How to convert an existing project to MicroFrontend with Module Federation"
+date: 2022-12-10T16:50:28+08:00
 author: "Feng Xue"
-draft: true
+tags: ["Javascript", "MicroFrontend", "Module Federation"]
+toc: true
+usePageBundles: false
+draft: false 
 ---
 
 Nowadays, I joined a frontend team in a new company in Singapore, the project is based on monorepo (you can find more about monorepo [here](https://monorepo.tools/)) and the tech lead maintains the project very well, keeping updating the main libraries to the latest version and keeping an eye on the new technology to improve the solution and codes. 
@@ -27,7 +30,7 @@ Actually there are some other popular frameworks doing the microfrontend, like s
 
 ## Migration with Module federation with Nx
 
-Since we already installed [Nx](https://nx.dev/) in our repo to manage the monorepo, it's good to use module federation with Nx as well to include the new project in the management of Nx. Check [here](https://nx.dev/recipes/module-federation#module-federation-and-micro-frontends). Nx creates its own module federation module to simplify the procedure, if the whole project has not been created, it's good to use it.
+In our project, we installed [Nx](https://nx.dev/) to manage the monorepo, it's good to use module federation with Nx as well to include the new project in the management of Nx. You can learn more about [monorepo](https://monorepo.tools/) and [the comparasion with polyrepo](https://github.com/joelparkerhenderson/monorepo-vs-polyrepo) Check [here](https://nx.dev/recipes/module-federation#module-federation-and-micro-frontends). Nx creates its own module federation module to simplify the procedure, if the whole project has not been created, it's good to use it.
 
 ```js
 const withModuleFederation = require('@nrwl/react/module-federation');
@@ -37,11 +40,10 @@ module.exports = withModuleFederation({
   ...moduleFederationConfig,
 });
 ```
-But our fleet-web project's webpack has already been well configured, it comes some conflict if we use the methods from Nx.
 
 ### Configure host with original configuration
 
- So instead of that, let's use the original module federation configuration.
+But normally when we want to apply the module federation to the project, it means the project's webpack has already been well configured, it comes some conflict if we use the methods from `Nx`. So instead of that, let's use the original module federation configuration.
 
 ```js
 const { ModuleFederationPlugin } = require('webpack').container
@@ -54,7 +56,7 @@ module.exports = {
   //...
   plugins: [
     new ModuleFederationPlugin({
-      name: 'fleet-web',
+      name: 'host',
       shared: {
         react: {
           singleton: true,
@@ -64,19 +66,10 @@ module.exports = {
           singleton: true,
           requiredVersion: deps['react-dom'],
         },
-        'react-redux': {
-          singleton: true,
-          requiredVersion: deps['react-redux'],
-        },
-        '@reduxjs/toolkit': {
-          singleton: true,
-          requiredVersion: deps['@reduxjs/toolkit'],
-        },
       },
     }),
     ...
-  ]
-};
+   ]};
 ```
 
 Here we only define the name in module federation plugin because we will use dynamic importing later. And we update the entry from `./src/index.tsx` to `'./src/bootstrap.tsx'`. It's because module federation needs an entrance to import the modules.
@@ -92,21 +85,17 @@ import('./index')
 So the host part is finished, let's see how to create a remote project with `Nx`. In the root folder, run the following command. Here I named the project as `delivery-test`, feel free to change it if you want other name.
 
 ```bash
-pnpm exec nx generate @nrwl/react:remote delivery-test
+nx generate @nrwl/react:remote delivery-test
 ```
 
-It would create the remote project under the fleet-web project with its own configuration. For the webpack, we would configure like below:
+It would create the remote project under the project with its own configuration. For the webpack, we would configure like below:
 
 ```js
 require('dotenv').config()
 const { join, resolve } = require('path')
 const webpack = require('webpack')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const packageConfig = require('../../package.json')
 const { version } = packageConfig
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const isProductionBuild = process.env.NODE_ENV === 'production'
 const isDevDockerEnv = isDev && process.env.DEVELOPMENT_ENV === 'docker'
@@ -117,22 +106,6 @@ const deps = packageConfig.dependencies
 module.exports = {
   mode: isDev ? 'development' : 'production',
   entry: './src/main.ts',
-  experiments: (() => {
-    if (isDevDockerEnv) {
-      return undefined
-    }
-    return {
-      lazyCompilation: isDev
-        ? {
-            // Please see https://github.com/webpack/webpack/issues/12564#issuecomment-771877525 to understand why this is useful
-            entries: false,
-          }
-        : false,
-      cacheUnaffected: isDev,
-      topLevelAwait: true,
-      // outputModule: true,    Remember to not set outputModule as true
-    }
-  })(),
   output: {
     ...(isProductionBuild && {
       path: join(process.cwd(), 'dist/apps/delivery-test'),
@@ -165,7 +138,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'delivery-test',
       filename: 'remoteEntry.js',
-      library: { type: 'global', name: 'delivery_test' },
+      library: { type: 'global', name: 'delivery_test' }, // NOTE: use underscore here, minus is not allowed
       exposes: {
         './Module': './src/remote-entry.ts',
       },
@@ -177,29 +150,8 @@ module.exports = {
         'react-dom': {
           singleton: true,
           requiredVersion: deps['react-dom'],
-        },
-        'react-redux': {
-          singleton: true,
-          requiredVersion: deps['react-redux'],
-        },
-        '@reduxjs/toolkit': {
-          singleton: true,
-          requiredVersion: deps['@reduxjs/toolkit'],
-        },
+        }
       },
-    }),
-    ...(isDev
-      ? [new ReactRefreshPlugin({ overlay: false })]
-      : [
-          new MiniCssExtractPlugin({
-            filename: 'static/css/[name].[contenthash].css',
-            chunkFilename: 'static/css/[name].[contenthash].chunk.css',
-          }),
-        ]),
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
-      version,
-      env: isProductionBuild ? 'production' : 'development',
     }),
   ],
 }
@@ -207,7 +159,7 @@ module.exports = {
 
 In the module federation configuration, we define a global variable `delivery_test` to pass the parameters through dynamical importing. Be carefull, the variable's name does not accept `-` symbol.
 
-For the Nx commands, we can also update the commands in `project.json`:
+For the `Nx` commands, we can also update the commands in `project.json`:
 
 ```js
 "build": {
@@ -226,14 +178,13 @@ For the Nx commands, we can also update the commands in `project.json`:
   "executor": "nx:run-commands",
   "options": {
     "command": "pnpm cross-env NODE_OPTIONS=--max-old-space-size=6144 NODE_ENV=development webpack serve --config ./apps/delivery-test/webpack.config.js",
-    "envFile": "apps/fleet-web/.env"
   }
 },
 ```
 
 ### Module federation dynamic library
 
-So the setup and configuration are completed. So how can we use the component from remote project in the host fleet-web? In the module federation configuration of host fleet-web, we do not have any text about the remote project `delivery-test`, it's because we gonna import the remote dynamically, which means the remote project can be imported during runtime without specifying at build time. For the principle, you can check [this one](https://h3manth.com/posts/dynamic-remotes-webpack-module-federation/) and also [4 ways to use dynamic remotes](https://oskari.io/blog/dynamic-remotes-module-federation/).
+So the setup and configuration are completed. So how can we use the component from remote project in the host? In the module federation configuration of host, we do not have any text about the remote project `delivery-test`, it's because we gonna import the remote dynamically, which means the remote project can be imported during runtime without specifying at build time. For the principle, you can check [this one](https://h3manth.com/posts/dynamic-remotes-webpack-module-federation/) and also [4 ways to use dynamic remotes](https://oskari.io/blog/dynamic-remotes-module-federation/).
 
 
 ```js
@@ -243,7 +194,6 @@ function loadComponent(scope: string, module: string) {
     // Initializes the share scope. This fills it with known provided modules from this build and all remotes
     await __webpack_init_sharing__('default')
     const container = window[libName] // or get the container somewhere else
-    console.log('load component', libName, container)
     // Initialize the container, it may provide shared modules
     await container.init(__webpack_share_scopes__.default)
     const factory = await window[libName].get(module)
