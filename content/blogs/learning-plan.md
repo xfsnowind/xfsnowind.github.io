@@ -14,7 +14,7 @@ The techniques and some project I plan to learn or finish:
 * Command kitty -- get familiar with kitty
 * material design -- get to know how to use material design
 * Flutter vs React Native -- get some overview of mobile development
-* React-hook form website with react, redux -- use react-hook-form to generate a full form again and deploy
+* React-hook-form website with react -- use react-hook-form to generate a full form again
 * Hugo personal github page -- [xfsnowind](https://xfsnowind.github.io)
 * [React long lists](https://xfsnowind.github.io/blogs/react-virtualized/) -- react-window, react-virtual-window
 * Go through test framework of js, jest, react-testing-library -- review the test library of js
@@ -27,5 +27,9 @@ The techniques and some project I plan to learn or finish:
 * [Folderflip](/blogs/folderflip/) and [version 2](/blogs/folderflip-version2/)
 * Google map knowledge
 * Monorepo vs polyrepo
-* Micro Frontend - module federation, single-spa
+* Micro Frontend - [module federation](/blogs/micro-frontend-module-federation/)
 * VIM Advanced
+* GoLang
+* Cloud
+* Font vs SVG
+* react list key with id
