@@ -2,7 +2,7 @@
 title: "Powerful type-checking of React-hook-form and Learning Notes"
 date: 2023-01-28T16:05:09+08:00
 author: "Feng Xue"
-tags: ["Typescript", "Frontend", "React", "React hook form", ]
+tags: ["Typescript", "Frontend", "React", "React hook form"]
 toc: true
 usePageBundles: false
 draft: false 
