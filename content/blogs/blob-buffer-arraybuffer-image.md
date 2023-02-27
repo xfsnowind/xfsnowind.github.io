@@ -1,8 +1,8 @@
 ---
-title: "Blob Buffer Arraybuffer Image"
+title: "Learning Notes about Blob, Buffer, Arraybuffer with Image"
 date: 2023-02-27T16:27:42+08:00
 author: "Feng Xue"
-tags: ["Frontend", "Blob", "Learning Notes", "Buffer", "Image"]
+tags: ["Frontend", "Blob", "Learning Notes", "Buffer", "ArrayBuffer", "Image"]
 toc: true
 usePageBundles: false
 draft: true
@@ -10,13 +10,21 @@ draft: true
 
 These days when I handle the image in the frontend, there are some concepts make me confusing. So I want to write some notes about the learning notes here.
 
+* [What is Blob, Buffer, ArrayBuffer and Base64 format?](#concept)
+* [How to convert them among one another?](#conversion)
+* [How can they be used with Image?](#image)
+
 # Concept
 
 ## Blob
 
 explain the blob definition, concept
 
+https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
 ## ArrayBuffer
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
 
 ## Buffer
 
@@ -24,19 +32,19 @@ explain the blob definition, concept
 
 # Conversion
 
-## From Blob to ArrayBuffer
+## Blob <-> ArrayBuffer
 
-## From Blob to base64
+## Blob <-> base64
 
-## From ArrayBuffer to Blob
+## Blob <-> Buffer
 
-## From ArrayBuffer to Base64
+## ArrayBuffer <-> Base64
 
-## From Buffer to Blob
+## ArrayBuffer <-> Buffer
 
 # Image
 
-How to transfer, display and save the image
+How are these formats applied when we transfer, display and save the image?
 
 ## From Url
 
@@ -44,10 +52,21 @@ with given url, we can display it directly in the html page by assign it to the 
 
 ### Blob Url
 
+https://stackoverflow.com/questions/30864573/what-is-a-blob-url-and-why-it-is-used
+
+https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+
 ## Local file
 
-### Upload file
+Type `File`
+
 Blob
 
 
-
+```js
+async function imageUrlToBlobUrl(url: string) {
+    const blob = await (await fetch(url)).blob()
+    const blobUrl = window.URL.createObjectURL(blob)
+    return blobUrl
+}
+```
