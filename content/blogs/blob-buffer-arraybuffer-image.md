@@ -44,7 +44,7 @@ console.log(blob); // output: Blob { size: 13, type: "text/plain" }
 
 ### Blob Url
 
-As I mentioned before, Blob can be used to represent the image file in the combination with `URL.createObjectURL` method to create a URL that points to the data contained in the `Blob` object.
+As I mentioned before, we cannot hand the image file as raw binary data to the html as it does not accept this type. So Blob can be used to represent the image file in the combination with `URL.createObjectURL` method to create a URL that points to the data contained in the `Blob` object.
 
 ```js
 const imageBlob = fetch('https://example.com/image.png').then(response => response.blob());
@@ -61,25 +61,82 @@ Buffer is an object in Node.js that represents a binary data buffer. It is simil
 
 ## Base64
 
-Base64 is a binary-to-text encoding scheme to represent binary data in an ASCII string format. It's commonly used to encode binary data, like image, audio and video files so that they can be transmitted over network.
-
-Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It is commonly used to encode binary data such as images, audio files, and video files so that they can be transmitted over networks that are designed to handle only text data.
-
-The Base64 encoding algorithm takes a sequence of binary data and converts it to a sequence of printable characters using a fixed set of 64 characters, typically consisting of uppercase and lowercase letters, digits, and two additional symbols such as '+' and '/'. The resulting string is larger than the original binary data because each block of 3 bytes is represented as 4 characters.
-
-
+Base64 is a binary-to-text encoding scheme to represent binary data in an ASCII string format with a fixed set of 64 characters, consisting of uppercase and lowercase letters, digits and two additional symbols, '+' and '/'. It's commonly used to encode binary data, like image, audio and video files so that they can be transmitted over network. However, the problem of base64 is it takes an extra 33% data as each block of 3 bytes is represented as 4 characters in Javascript.
 
 # Conversion
 
+So let's look at how to convert these format with one another.
+
 ## Blob <-> ArrayBuffer
+
+Blob can be converted to `ArrayBuffer` with its static method `.arrayBuffer`:
+
+```js
+const af = await blob.arrayBuffer()
+```
+
+Another way to read `Blob` is to use a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response). You can read the `Blob` through the following code:
+
+```js
+const af = await new Response(blob).arrayBuffer()
+```
 
 ## Blob <-> base64
 
+To convert the Blob to Base64 string, we need to use the `FileReader`'s method `readAsDataURL`:
+
+```js
+const convertBase64 = (file: Blob) =>
+  new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+
+const base64 = await convertBase64(blob)
+```
+
+To convert the base64 string to Blob, we need to check the format of the base64 string if it's a file, especially an image file. If it is, we need prepend the content type data.
+
+```js
+const base64Data = "aGV5IHRoZXJl";
+const base64: Response = await fetch(base64Data);
+// or 
+const base64Response: Response = await fetch(`data:image/jpeg;base64,${base64Data}`);
+```
+
+And then obtain the Blob by `Response`'s method `blob`
+
+```js
+const blob = await base64Response.blob();
+```
+
 ## Blob <-> Buffer
 
-## ArrayBuffer <-> Base64
+Buffer is Nodejs platform based object, it's mostly used to transfer data. But sometimes we use Blob in the frontend and send to the backend, so we need to convert Blob to Buffer. We have two options to do this:
 
-## ArrayBuffer <-> Buffer
+
+```js
+const arrayBuffer = await blob.arrayBuffer();
+const buffer = Buffer.from(arrayBuffer);
+```
+
+Or
+
+```js
+const buffer = Buffer.from(blob, 'binary');
+```
+
+And sometimes, the data sent from frontend is not just a Blob file, it's a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) object, a special kind of `Blob`.
+
+```js
+const data: Buffer = fs.readFileSync(imageFile.filepath);
+```
 
 # Image
 
@@ -87,7 +144,7 @@ How are these formats applied when we transfer, display and save the image?
 
 ## From Url
 
-with given url, we can display it directly in the html page by assign it to the `src` of a `img` element.
+With given url, we can display it directly in the html page by assign it to the `src` of a `img` element.
 
 ### Blob Url
 
