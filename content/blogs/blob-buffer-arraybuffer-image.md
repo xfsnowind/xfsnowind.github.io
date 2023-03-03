@@ -1,14 +1,14 @@
 ---
-title: "Learning Notes about Blob, Buffer, Arraybuffer with Image"
-date: 2023-02-27T16:27:42+08:00
+title: "Learning Notes about Image in Frontend"
+date: 2023-03-02T16:27:42+08:00
 author: "Feng Xue"
-tags: ["Frontend", "Blob", "Learning Notes", "Buffer", "ArrayBuffer", "Image"]
+tags: ["Frontend", "Learning Notes", "Image"]
 toc: true
 usePageBundles: false
-draft: true
+draft: false
 ---
 
-These days when I handle the image in the frontend, there are some concepts make me confusing. So I want to write some notes about the learning processing here.
+These days when I handle the image in the frontend, there are some concepts make me confusing. How can we handle the image when saving, uploading and transfering the files? So I want to write some notes about the learning processing here.
 
 * [What is Blob, Buffer, ArrayBuffer and Base64 format?](#concept)
 * [How to convert them among one another?](#conversion)
@@ -40,17 +40,6 @@ Blob is the abbreviation of `Binary Large OBject`. From its name, we can see it'
 const text = 'Hello, world!';
 const blob = new Blob([text], { type: 'text/plain' });
 console.log(blob); // output: Blob { size: 13, type: "text/plain" }
-```
-
-### Blob Url
-
-As I mentioned before, we cannot hand the image file as raw binary data to the html as it does not accept this type. So Blob can be used to represent the image file in the combination with `URL.createObjectURL` method to create a URL that points to the data contained in the `Blob` object.
-
-```js
-const imageBlob = fetch('https://example.com/image.png').then(response => response.blob());
-const imageUrl = URL.createObjectURL(imageBlob);
-const img = document.createElement('img');
-img.src = imageUrl; // blob:XXX...
 ```
 
 ## Buffer
@@ -104,13 +93,12 @@ const base64 = await convertBase64(blob)
 To convert the base64 string to Blob, we need to check the format of the base64 string if it's a file, especially an image file. If it is, we need prepend the content type data.
 
 ```js
-const base64Data = "aGV5IHRoZXJl";
 const base64: Response = await fetch(base64Data);
 // or 
 const base64Response: Response = await fetch(`data:image/jpeg;base64,${base64Data}`);
 ```
 
-And then obtain the Blob by `Response`'s method `blob`
+And then obtain the Blob by `Response`'s method `blob`:
 
 ```js
 const blob = await base64Response.blob();
@@ -138,6 +126,16 @@ And sometimes, the data sent from frontend is not just a Blob file, it's a [`Fil
 const data: Buffer = fs.readFileSync(imageFile.filepath);
 ```
 
+## Base64 <-> Buffer
+
+Nodejs Buffer provides a very convenient method to convert from/to these two types:
+
+```js
+const base64 = Buffer.from(data).toString('base64');
+
+const buffer = Buffer.from(b64string, 'base64');
+```
+
 # Image
 
 How are these formats applied when we transfer, display and save the image?
@@ -148,21 +146,65 @@ With given url, we can display it directly in the html page by assign it to the 
 
 ### Blob Url
 
-https://stackoverflow.com/questions/30864573/what-is-a-blob-url-and-why-it-is-used
+But what about the file uploaded? 
 
-https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-
-## Local file
-
-Type `File`
-
-Blob
-
+Then we need to use `Blob` url. `Blob` URLs can only be generated internally by the browser. [`URL.createObjectURL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL) will create a special reference to the `Blob` or `File` object which later can be released using `URL.revokeObjectURL()`. These URLs can only be used locally in the single instance of the browser and in the same session.
 
 ```js
-async function imageUrlToBlobUrl(url: string) {
-    const blob = await (await fetch(url)).blob()
-    const blobUrl = window.URL.createObjectURL(blob)
-    return blobUrl
+const imageBlob = fetch('https://example.com/image.png').then(response => response.blob());
+const imageUrl = URL.createObjectURL(imageBlob);
+const img = document.createElement('img');
+img.src = imageUrl; // blob:XXX...
+```
+
+If you need to pass the file object through different routes, like jump with link in the same page, besides save the file on the global place, like `windonw` or localStorage, sessionStorage, we can also pass the file through url's query parameter 
+
+# Communication with server
+
+## Send From Frontend
+
+There are several ways to send and receive file from server:
+
+1. `HTML Form`: One common way to upload files to a server is using an HTML form with an input field of type file. When the form is submitted, the browser sends a `multipart/form-data` request to the server, which can then process the uploaded file(s) as part of the request payload.
+```js
+<form id="uploadbanner" enctype="multipart/form-data" method="post" action="#">
+   <input id="fileupload" name="myfile" type="file" />
+   <input type="submit" value="submit" id="submit" />
+</form>
+```
+
+2. `FormData`: You can also use the `Fetch API` or `XMLHttpRequest` to send files to a server using FormData. The FormData object lets you build a set of key-value pairs that represent form fields and their values, including file inputs.
+```js
+const formData = new FormData();
+formData.append('imageFile', file, file.name);
+
+const response = await fetch(url, { method: 'POST', body: formData });
+const json = await response.json();
+```
+3. `WebSocket`: If you need real-time file transfer, you can use WebSockets to establish a persistent connection between the client and server. You can then send file data through the WebSocket connection as a binary stream.
+
+## Receive By Backend
+
+With browser supported `FormData` object, we can use `formidable` to handle it:
+
+```js
+import formidable from 'formidable';
+
+const post = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const fData = await new Promise<{ fields: any; files: any }>((resolve) => {
+    // extract the file with formidable
+    const form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        res.status(500).send({ result: 'Upload failed' });
+        return;
+      }
+      resolve({ fields, files });
+    });
+  });
+
+  const imageFile = fData.files.imageFile;
 }
 ```
+
+To read the file as Nodejs's `Buffer`, we can use the above [method](#blob---buffer)
