@@ -1,11 +1,11 @@
 ---
 title: "Frontend Video Learning Notes"
-date: 2023-02-17T14:20:52+08:00
+date: 2023-02-20T14:20:52+08:00
 author: "Feng Xue"
 tags: ["Frontend", "Video", "Learning Notes", "Live Streaming"]
 toc: true
 usePageBundles: false
-draft: true
+draft: false
 ---
 
 These days I am interested at the Frontend video technologies, so did some investigation and want to write learning notes here.
