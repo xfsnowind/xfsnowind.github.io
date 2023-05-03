@@ -12,7 +12,7 @@ The techniques and some project I plan to learn or finish:
 * webpack hotload
 * ES6 ES7 -- get overview of ES6 and ES7
 * Command kitty -- get familiar with kitty
-* material design -- get to know how to use material design
+* Material UI -- get to know how to use material design
 * Flutter vs React Native -- get some overview of mobile development
 * React-hook-form website with react -- use react-hook-form to generate a full form again
 * Hugo personal github page -- [xfsnowind](https://xfsnowind.github.io)
@@ -33,3 +33,4 @@ The techniques and some project I plan to learn or finish:
 * Cloud
 * Font vs SVG
 * react list key with id
+* Typescript
