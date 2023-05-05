@@ -21,11 +21,13 @@ The video codecs is a software algorithm that compress and decompress the digita
 A simple example about the necessary of video codecs is a 30 minute video with high definition (1920 x 1080) in full code (4 bytes per pixel) would need about 447.9 GB of storage. With encoding or compression, not only the storage, but also network band-width which is more expensive are largely saved.
 
 But different codecs have different strategies to encode the videos, like lossless and lossy.
-1. Lossless compression would encode the data without discard any information. 
+
+1. Lossless compression would encode the data without discard any information.
 2. Lossy compression would discard some unnecessary data and reduce quality when possible, while easier to store and transfer. And this is the name of the game for web compression.
 
 Here are the most common codecs being used on the web.
-* AV1 - AOMedia Video 1	
+
+* AV1 - AOMedia Video 1
 * AVC (H.264) - Advanced Video Coding
 * H.263 - H.263 Video
 * HEVC (H.265) - High Efficiency Video Coding
@@ -43,15 +45,15 @@ Mozilla also has a very good doc to explain the codecs [here](https://developer.
 ## Video format
 
 Once compressed, the result of audio and video would need to be packed into a file or container, which is the video format. And the video format is a type of file to contain the digital media, like audio, video and other information, subtitles and metadata. It would determine how the data is stored and organized in the file. Differences between different formats includes:
-1. Codecs, different formats still have
+
+1. Codecs: different formats support different codecs;
 2. Compression efficiency: different strategies are applied to compress the video files;
 3. Quality: Some format are better suited for high-quality video, while some other are designed for low-bandwidth applications;
 4. Streaming support: some video formats are only designed specifically for streaming, while others support adaptive bitrate streaming and low-latency playback
 
-The relationship between of video format and codecs is closely related. Codecs suppported by formats are different, currently, mp4 is widely used.
+The relationship between of video format and codecs is closely related. Codecs suppported by formats are different, currently, `mp4` is widely used for video.
 
-So format is kind of independent from codecs, it does not care what kind of codecs when the video is produced, as long as format supports, you can use any kind of codecs. But considering the reality, most suitable codecs would be chosen with factors such as file size, video quality, compatibility with different devices and platforms, and support for features such as subtitles, closed captions, and streaming protocols. 
-
+So format is kind of independent from codecs, it doesn't care what kind of codecs when the video is produced, as long as format supports, you can use any kind of codecs. But considering the reality, most suitable codecs would be chosen with factors such as file size, video quality, compatibility with different devices and platforms, and support for features such as subtitles, closed captions, and streaming protocols.
 
 Here is the list of popular formats supported codecs:
 
@@ -72,6 +74,7 @@ A video player will read the format and codecs of the video from its metadata (a
 ### Web Video player
 
 For frontend, we have several options to play video:
+
 1. HTML5 native video player: It is built into most modern web browsers, also supporting live streaming. It offers basic playback functionalities and can be customized with HTML, css and js.
 2. Video.js: It is an open source HTML5 video player, which is highly customizable and supports a wide range of video formats. It also offers a plugin system that helps developers to add additional functioanlity to the plaoyer, such as advertising and analystics.
 3. hls.js: it works directly on the H5 video element by implementing an HLS client and supports HLS
@@ -84,6 +87,7 @@ Here is the difference between H5 player and video.js:
 There are also some other commercial players, like Flowplayer, JW player, etc. We will not discuss them here.
 
 Some other crucial features are also need to look out for H5 video player:
+
 * DRM - Digital Rights management. It's used to encrypt and protect your video content from unauthorized users.
 * Ad Insertion - From commercial aspect, player needs to support to insert the ad before (preroll), in the middle (midroll) and after (postroll) the video.
 * Subtitles - it should allow to display the different language subtitles
@@ -94,6 +98,7 @@ Some other crucial features are also need to look out for H5 video player:
 So we have explained the basic concept of the video and player. And it can be played locally now, but nowadays it's so common to play the video online. So we need a streaming protocol to delivery data over the internet. They can sit on the Application, Presentation and Session layers.
 
 There are multiple protocols or solutions used:
+
 * Progressive download
 * HLS (HTTP Live Streaming)
 * DASH (Dynamic Adaptive Streaming over HTTP)
@@ -116,11 +121,11 @@ Nowadays, different environments would provide different bandwidths for video de
 
 ## Live streaming
 
-The difference of video streaming from live streaming is live streaming sending the live content generated by user's camera instead of fixed the video files. And normally live streaming has higher requirement for casting the live video to multiple users simultaneously. 
+The difference of video streaming from live streaming is live streaming sending the live content generated by user's camera instead of fixed the video files. And normally live streaming has higher requirement for casting the live video to multiple users simultaneously.
 
 ### BackPressure
 
-The backpressure of live streaming problem in frontend can occur when the amount of data being sent from the server exceeds the capacity of the client to receive and process that data. This can lead to buffering and delays in the live stream, which can negatively impact the user experience. 
+The backpressure of live streaming problem in frontend can occur when the amount of data being sent from the server exceeds the capacity of the client to receive and process that data. This can lead to buffering and delays in the live stream, which can negatively impact the user experience.
 
 Http-based streaming protocols are designed to handle the backpressure due to their use of adaptive bitrate streaming, which allows the server to adjust the quality of the video sent according to the available bandwidth and the capability of the client device. In addition, Http-based streaming protocols work with http caching, allow the client to cache the video segments and reducing the amount of data. However, it's still possible for backpressure to occur with http-based streaming protocols if the server is under heavy load.
 
@@ -147,12 +152,11 @@ But using WebSocket for live streaming [have the problem of backpressure](https:
 
 WebRTC is a open-sourced framework to enable the real-time communication between to web and mobile application in a peer-to-peer fashion.
 
-The difference between WebRTC and WebSocket is 
+The difference between WebRTC and WebSocket is
 
 1. WebSocket is a client-server protocol while WebRTC is a peer-to-peer protocol and offers capabilities for browsers and mobiles.
 2. WebSocket works only over TCP, WebRTC is primarily used over UDP (although it can work over TCP as well).
 3. WebRTC is primarily designed for streaming audio and video content. But Websocket is better suitable for text data, although it can also be used for video transmission.
-4. 
 
 ### Other aspects
 
