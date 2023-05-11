@@ -53,7 +53,7 @@ Once compressed, the result of audio and video would need to be packed into a fi
 
 The relationship between of video format and codecs is closely related. Codecs suppported by formats are different, currently, `mp4` is widely used for video.
 
-So format is kind of independent from codecs, it doesn't care what kind of codecs when the video is produced, as long as format supports, you can use any kind of codecs. But considering the reality, most suitable codecs would be chosen with factors such as file size, video quality, compatibility with different devices and platforms, and support for features such as subtitles, closed captions, and streaming protocols.
+So format is kind of independent from codecs, it doesn't care what kind of codecs it is when the video is produced. As long as format supports, you can use any kind of codec. But considering the reality, most suitable codecs would be chosen with factors such as file size, video quality, compatibility with different devices and platforms, and support for features such as subtitles, closed captions, and streaming protocols.
 
 Here is the list of popular formats supported codecs:
 
@@ -69,51 +69,51 @@ The most common formats for video includes MP4, AVI, MPEG and WebM. The most fam
 
 So the codecs and format of video file are explained, then we need a player to play it now.
 
-A video player will read the format and codecs of the video from its metadata (also other information, like audio, subtitles). It will decide if the format and codecs are supported. To play the video, the related codecs are required to decode the video or audio. That's why we have to choose the correct video player, because it needs to support the format and codecs that your audience is likely to use. 
+A video player will read the format and codecs of the video from its metadata (also other information, like audio, subtitles). It will decide if the format and codecs are supported. To play the video, the related codecs are required to decode the video or audio. That's why we have to choose the correct video player, because it needs to support the format and codecs that your audience likely use.
 
 ### Web Video player
 
 For frontend, we have several options to play video:
 
 1. HTML5 native video player: It is built into most modern web browsers, also supporting live streaming. It offers basic playback functionalities and can be customized with HTML, css and js.
-2. Video.js: It is an open source HTML5 video player, which is highly customizable and supports a wide range of video formats. It also offers a plugin system that helps developers to add additional functioanlity to the plaoyer, such as advertising and analystics.
-3. hls.js: it works directly on the H5 video element by implementing an HLS client and supports HLS
-4. dash.js: it provides DASH playback in any browser that support Media Source Extension (MSE) and is one of the best adaptive streaming algorithms.
+2. `video.js`: It is an open source HTML5 video player, which is highly customizable and supports a wide range of video formats. It also offers a plugin system that helps developers to add additional functioanlity to the player, such as advertising and analystics.
+3. `hls.js`: It works directly on the H5 video element by implementing an HLS client and supports [HLS](#http-based-adaptive-streaming-protocols) (discuss in the below paragraph).
+4. `dash.js`: It provides DASH playback in any browser that support Media Source Extension (MSE) and is one of the best adaptive streaming algorithms.
 
-Here is the difference between H5 player and video.js:
+Here is the difference between H5 player and `video.js`:
 
 ![Difference between H5 player and video.js](/images/video/video.js-vs-h5-player.png "Difference between H5 player and video.js")
 
-There are also some other commercial players, like Flowplayer, JW player, etc. We will not discuss them here.
+There are also some other commercial players, like `Flowplayer`, `JW player`, etc. We will not discuss them here.
 
 Some other crucial features are also need to look out for H5 video player:
 
-* DRM - Digital Rights management. It's used to encrypt and protect your video content from unauthorized users.
-* Ad Insertion - From commercial aspect, player needs to support to insert the ad before (preroll), in the middle (midroll) and after (postroll) the video.
-* Subtitles - it should allow to display the different language subtitles
-* Analystics - it's valuable to measure the viewership, engagement levels and other aspect of the viewer to help author get the statistic.
+* **DRM** - Digital Rights management. It's used to encrypt and protect your video content from unauthorized users.
+* **Ad Insertion** - From commercial aspect, player needs to support to insert the ad before (preroll), in the middle (midroll) and after (postroll) the video.
+* **Subtitles** - It should allow to display the different language subtitles
+* **Analystics** - It's valuable to measure the viewership, engagement levels and other aspect of the viewer to help author get the statistic.
 
 ## Video streaming (Video on Demand - VOD)
 
-So we have explained the basic concept of the video and player. And it can be played locally now, but nowadays it's so common to play the video online. So we need a streaming protocol to delivery data over the internet. They can sit on the Application, Presentation and Session layers.
+So we have explained the basic concept of the video and player. And it can be played locally now, but nowadays it's so common to play the video online. So we need a streaming protocol to delivery data over the internet. They can sit on the `Application`, `Presentation` and `Session` layers.
 
 There are multiple protocols or solutions used:
 
 * Progressive download
-* HLS (HTTP Live Streaming)
-* DASH (Dynamic Adaptive Streaming over HTTP)
-* RTMP (Real-Time Messaging Protocol)
-* RTSP (Real-Time Streaming Protocol)
-* WebRTC (Web Real-Time Communication)
-* websocket
+* **RTMP** (Real-Time Messaging Protocol)
+* **RTSP** (Real-Time Streaming Protocol)
+* **HLS** (HTTP Live Streaming)
+* **DASH** (Dynamic Adaptive Streaming over HTTP)
+* **WebRTC** (Web Real-Time Communication)
+* **WebSocket**
 
 ### Traditional Stateful Streaming Protocols
 
-RTSP (Real-Time Streaming Protocol) and RTMP (Real-Time Messaging Protocol) were created by Adobe and played by the Adobe Flash player. Even though Flash was announced of death by Adobe, RTMP and RTSP are still used for video and audio transmission for fast video delivery. Many broadcasters choose to transport live streams to their media server using RTMP. RTMP and RTSP keep latency at around 5 seconds or less.
+**RTSP** (Real-Time Streaming Protocol) and **RTMP** (Real-Time Messaging Protocol) were created by Adobe and played by the Adobe Flash player. Even though Flash was announced of death by Adobe, RTMP and RTSP are still used for video and audio transmission for fast video delivery. Many broadcasters choose to transport live streams to their media server using RTMP. RTMP and RTSP keep latency at around 5 seconds or less.
 
 ### HTTP-Based Adaptive Streaming Protocols
 
-HLS (supported by iOS and Android devices) and MPEG-DASH (supported by Android devices) are the most common protocols used nowadays. And these streaming over HTTP are technically not "Streams", rather are progressive downloads sent via web servers. HTTP-based protocols are stateless and can cause 10-45 seconds in latency. To reduce the latency, there are also low-latency version to HLS and DASH.
+**HLS** (supported by iOS and Android devices) and **MPEG-DASH** (supported by Android devices) are the most common protocols used nowadays. And these streaming over HTTP are technically not "Streams", rather are progressive downloads sent from web servers. HTTP-based protocols are stateless and can cause 10-45 seconds in latency. To reduce the latency, there are also low-latency version to HLS and DASH.
 
 ![Difference between HLS and DASH](/images/video/hls-dash.png "Difference between HLS and DASH")
 
@@ -121,13 +121,13 @@ Nowadays, different environments would provide different bandwidths for video de
 
 ## Live streaming
 
-The difference of video streaming from live streaming is live streaming sending the live content generated by user's camera instead of fixed the video files. And normally live streaming has higher requirement for casting the live video to multiple users simultaneously.
+The difference of video streaming from live streaming is live streaming sending the live content generated by user's camera instead of the static audio/video files. And normally live streaming has higher requirement for casting the live video to multiple users simultaneously.
 
 ### BackPressure
 
-The backpressure of live streaming problem in frontend can occur when the amount of data being sent from the server exceeds the capacity of the client to receive and process that data. This can lead to buffering and delays in the live stream, which can negatively impact the user experience.
+The backpressure of live streaming problem in frontend can occur when the amount of data sent from the server exceeds the capacity of the client to receive and process those data. This can lead to buffering and delays in the live stream, which can negatively impact the user experience.
 
-Http-based streaming protocols are designed to handle the backpressure due to their use of adaptive bitrate streaming, which allows the server to adjust the quality of the video sent according to the available bandwidth and the capability of the client device. In addition, Http-based streaming protocols work with http caching, allow the client to cache the video segments and reducing the amount of data. However, it's still possible for backpressure to occur with http-based streaming protocols if the server is under heavy load.
+Http-based streaming protocols are designed to handle the backpressure due to their use of **Adaptive Bitrate Streaming**, which allows the server to adjust the quality of the video according to the current available bandwidth and the capability of the client device. In addition, Http-based streaming protocols works with http caching, allow the client to cache the video segments and reducing the amount of data. However, it's still possible for backpressure to occur with http-based streaming protocols if the server is under heavy load.
 
 ### Content Delivery Network
 
@@ -142,11 +142,20 @@ When deliverying the video content to the remote users, it may cause the latency
 
 Live streaming for iOS devices with HLS or DASH needs an index file with format M3U8. It is the format that is supported by the native video player in iOS, which is the AVPlayer.
 
+In theory, DASH streaming cannot be played in the Apple's devices, but we have some other alternatives. 
+
+1. Use a third-party player app
+There are a number of third-party player apps available in the App Store that support DASH streaming. Some popular options include: **VLC for iOS**, **MX Player**, **Infuse Pro**, etc
+2. Use the built-in iOS player with a third-party DRM plugin
+It can be enabled by installing the third-party DRM plugins, which are normally provided by the content provider, such as Netflix or Amazon Prime Video. Once plugins are installed, the build-in iOS player could be used to play the DASH streams that are protected by the corresponding DRM scheme.
+
 ### WebSocket
 
 Websocket is a realtime protocol that enables client-server bi-directional communication over a persisitent, single-socket connection. This is largely used in the applications that require real time communication and cooperations, such as Google doc. And comparing the Http-based protocol's long polling, websocket is based on event-driven, this can help to reduce latency and improve the performance of the live stream.
 
-But using WebSocket for live streaming [have the problem of backpressure](https://developer.chrome.com/en/articles/websocketstream/), the client cannot consume the data sent from server. So **How to solve this?** One solution would be pushing the data to the buffer when available. But what if the buffer is full? So another solution would be `speed up` the live streaming. If the current time is behind the duration, we can increase the speed based on the lag time.
+But using WebSocket for live streaming [have the problem of backpressure](https://developer.chrome.com/en/articles/websocketstream/), the client cannot consume the data sent from server.
+
+One solution would be pushing the data to the buffer when available. But what if the buffer is full? So another solution would be `speed up` the live streaming. If the current time is behind the duration, we can increase the speed based on the lag time. And of course, effecting user experience would be the trade-off.
 
 ### WebRTC
 
