@@ -30,18 +30,18 @@ Here we have two ways to trigger the undo:
 
   ```js
   undoCallback: async () => {
-  // Undo the process should be fast with update only one field value
-  setUndoStateMap((value) => ({ ...value, [newRow.id]: key }))
-  // during the undo, use data grid's way to update the cell value manually
-  await tableApiRef.current.startCellEditMode({ id: newRow.id, field: key })
-  await tableApiRef.current.setEditCellValue({
-      id: newRow.id,
-      field: key,
-      value: oldValue,
-  })
-  // If the cell is in edit mode, stop it
-  if 
-      await tableApiRef.current.stopCellEditMode({ id: newRow.id, field: key })
+    // Undo the process should be fast with update only one field value
+    setUndoStateMap((value) => ({ ...value, [newRow.id]: key }))
+    // during the undo, use data grid's way to update the cell value manually
+    await tableApiRef.current.startCellEditMode({ id: newRow.id, field: key })
+    await tableApiRef.current.setEditCellValue({
+        id: newRow.id,
+        field: key,
+        value: oldValue,
+    })
+    // If the cell is in edit mode, stop it
+-   if (tableApiRef.current.getCellMode(newRow.id, key) === 'edit')
+-     await tableApiRef.current.stopCellEditMode({ id: newRow.id, field: key })
   }
   ```
 
