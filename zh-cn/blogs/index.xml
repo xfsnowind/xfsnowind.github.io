@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on xfsnowind</title><link>https://xfsnowind.github.io/zh-cn/blogs/</link><description>Recent content in Blogs on xfsnowind</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 09 Aug 2022 20:27:47 +0200</lastBuildDate><atom:link href="https://xfsnowind.github.io/zh-cn/blogs/index.xml" rel="self" type="application/rss+xml"/><item><title>Learning Notes - React Hooks</title><link>https://xfsnowind.github.io/zh-cn/blogs/geektime/react-hooks/</link><pubDate>Tue, 09 Aug 2022 20:27:47 +0200</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/geektime/react-hooks/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on xfsnowind</title><link>https://xfsnowind.github.io/zh-cn/blogs/</link><description>Recent content in Blogs on xfsnowind</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 Jun 2023 23:56:57 +0800</lastBuildDate><atom:link href="https://xfsnowind.github.io/zh-cn/blogs/index.xml" rel="self" type="application/rss+xml"/><item><title>测试React Query</title><link>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</link><pubDate>Mon, 12 Jun 2023 23:56:57 +0800</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</guid><description>
+本文翻译自 TkDodo 的 Testing React Query
+谈到测试，经常会和React Query一起出现一些问题，所以我将在这里尝试回答其中的一些问题。我认为其中一个原因是测试“智能”组件（也称为容器组件）并不是一件容易的事情。随着hooks的兴起，这种分离已经大部分过时。现在倾向于直接在需要它们的地方使用hooks，而不是进行主要是随意地分离并向下传递props。
+我认为这通常是一个非常好的改进，有助于集中放置和代码可读性，但现在更多组件会去消耗props之外的依赖项。
+它们可能是useContext。它们可能是useSelector。或者它们可能是useQuery。
+这些组件在技术上不再是纯净的，因为在不同的环境中调用它们会导致不同的结果。在测试它们时，你需要仔细设置这些周围的环境以使其正常工作。
+模拟网络请求 由于React Query是一个异步的服务器状态管理库，你的组件很可能会向后端发送请求。在测试时，这个后端无法用以提供真实数据，即使可用，你可能也不希望使测试依赖于它。
+已经有海量的文章介绍如何使用jest模拟数据。如果你有api客户端，可以模拟它。你可以直接模拟fetch或axios。我非常认同Kent C. Dodds在他的文章《Stop mocking fetch》中所写的内容：
+使用@ApiMocking的mock service worker
+在模拟API方面，它可以成为你的唯一真实来源：
+适用于测试的Node环境 支持REST和GraphQL 具有storybook插件，因此你可以为使用useQuery的组件编写story 在浏览器中用于开发目的，你仍然可以在浏览器开发工具中看到请求的发送情况 与Cypress一起使用，类似于fixtures 通过处理我们的网络层，我们可以开始讨论一些需要关注的React Query特定事项：
+QueryClientProvider 每当你使用React Query时，你需要一个QueryClientProvider，并给它一个queryClient——这是一个保存QueryCache的容器。而Cache会保存你的请求的数据。
+我更喜欢为每个测试提供独立的QueryClientProvider，并为每个测试创建一个新的QueryClient。这样，测试之间完全隔离。另一种方法可能是在每个测试之后清除缓存，但我喜欢尽量将测试之间的共享状态保持最小化。否则，如果你同时运行测试，可能会出现意外和不稳定的结果。
+对于自定义的Hooks 如果你正在测试自定义hooks，我非常确定你正在使用react-hooks-testing-library。这是最简单的测试hooks的方法。我们可以通过这个库将我们的钩子包装在一个包装器中，该包装器是一个React组件，在渲染时用于包装测试组件。我认为这是创建QueryClient的理想位置，因为它将在每个测试中都执行一次：
+1const createWrapper = () =&amp;gt; { 2 // ✅ creates a new QueryClient for each test 3 const queryClient = new QueryClient() 4 return ({ children }) =&amp;gt; ( 5 &amp;lt;QueryClientProvider client={queryClient}&amp;gt;{children}&amp;lt;/QueryClientProvider&amp;gt; 6 ) 7} 8 9test(&amp;#34;my first test&amp;#34;, async () =&amp;gt; { 10 const { result } = renderHook(() =&amp;gt; useCustomHook(), { 11 wrapper: createWrapper() 12 }) 13}) 对于组件 如果你想测试一个使用useQuery hooks的组件，你还需要将该组件包在QueryClientProvider中。使用react-testing-library里的一个小包装器包住render似乎是一个不错的选择。看看React Query在他们的测试中是如何内部处理的。</description></item><item><title>Learning Notes - React Hooks</title><link>https://xfsnowind.github.io/zh-cn/blogs/geektime/react-hooks/</link><pubDate>Tue, 09 Aug 2022 20:27:47 +0200</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/geektime/react-hooks/</guid><description>
 Basic chapter Reason to Hooks React的本质就是从Model到View的映射。这里的Model就是Component的props和state。
 当Model的数据变化时，React不管它是怎么变化的，只关心它变化之后和之前的区别。这也就是所谓的声明式declarative，而这通过React的diff函数来实现。
 所以UI的展现更像是一个函数的执行。Model是输入参数，View是函数，执行结果就是Dom的改变。而React只要保证通过最优的办法执行变化的过程就行了。
