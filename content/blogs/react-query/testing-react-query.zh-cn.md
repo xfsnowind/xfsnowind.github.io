@@ -2,7 +2,7 @@
 title: "测试React Query"
 date: 2023-06-12T23:56:57+08:00
 author: "Feng Xue"
-tags: ["React Query", "Translation", "Blogs"]
+tags: ["React", "React Query", "Typescript", "Translation", "Blogs"]
 toc: true
 usePageBundles: false
 draft: false
