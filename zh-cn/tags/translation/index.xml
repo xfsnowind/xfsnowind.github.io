@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Translation on xfsnowind</title><link>https://xfsnowind.github.io/zh-cn/tags/translation/</link><description>Recent content in Translation on xfsnowind</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 Jun 2023 23:56:57 +0800</lastBuildDate><atom:link href="https://xfsnowind.github.io/zh-cn/tags/translation/index.xml" rel="self" type="application/rss+xml"/><item><title>测试React Query</title><link>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</link><pubDate>Mon, 12 Jun 2023 23:56:57 +0800</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Translation on xfsnowind</title><link>https://xfsnowind.github.io/zh-cn/tags/translation/</link><description>Recent content in Translation on xfsnowind</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 17 Jun 2023 14:48:58 +0800</lastBuildDate><atom:link href="https://xfsnowind.github.io/zh-cn/tags/translation/index.xml" rel="self" type="application/rss+xml"/><item><title>使用React Query和Web Sockets</title><link>https://xfsnowind.github.io/zh-cn/blogs/react-query/using-web-sockets-with-react-query/</link><pubDate>Sat, 17 Jun 2023 14:48:58 +0800</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/react-query/using-web-sockets-with-react-query/</guid><description>
+本文翻译自 TkDodo 的 Using WebSockets with React Query
+如何使用WebSockets与React Query处理实时数据是最近最常被问到的问题之一，因此我想尝试一下，并报告我的发现。这就是本文的内容 :)
+什么是WebSockets 简而言之，WebSockets允许从服务器推送消息或&amp;quot;实时数据&amp;quot;到客户端（浏览器）。通常情况下，使用HTTP时，客户端向服务器发出请求，希望获取一些数据，服务器响应该数据或错误，然后连接关闭。
+由于客户端是打开连接并发起请求的一方，这就没有机会让服务器在有更新可用时向客户端推送数据。
+这就是WebSockets的作用。
+就像其他HTTP请求一样，浏览器发起连接，但表示希望将连接升级为WebSocket。如果服务器接受了这个请求，它们将切换协议。这个连接不会终止，而是保持打开状态，直到任一方决定关闭它。现在，我们拥有了一个完全功能的双向连接，双方都可以传输数据。
+这主要的优点是服务器现在可以向客户端推送选择性的更新。如果多个用户查看相同的数据，并且其中一个用户进行了更新。通常情况下，其他客户端在主动刷新之前不会看到该更新。而使用WebSockets可以实时推送这些更新。
+React Query 集成 由于React Query主要是一个客户端异步状态管理库，所以我不会讨论如何在服务器上设置WebSockets。老实说，我从没做过，而且还取决于你在后端使用的技术。
+React Query没有专门为WebSockets构建的内置功能。这并不意味着不支持WebSockets，或者它们与库的兼容性不好。只是当涉及到数据获取时，React Query在使用方式上非常不偏不倚：它只需要一个已解决或拒绝的Promise即可工作 - 其余的由你决定。
+逐步进行 一般的思路是按照通常的方式设置查询，就像你不使用WebSockets一样。大多数情况下，你将拥有用于查询和更改实体的常规HTTP端点。
+1const usePosts = () =&amp;gt; 2 useQuery({ queryKey: [&amp;#39;posts&amp;#39;, &amp;#39;list&amp;#39;], queryFn: fetchPosts }) 3 4const usePost = (id) =&amp;gt; 5 useQuery({ 6 queryKey: [&amp;#39;posts&amp;#39;, &amp;#39;detail&amp;#39;, id], 7 queryFn: () =&amp;gt; fetchPost(id), 8 }) 此外，你可以设置一个全局的useEffect来连接到WebSocket终端。具体如何操作完全取决于你使用的技术。我看到过有人从Hasura订阅实时数据。有一篇很棒的文章介绍了如何连接到Firebase。在我的示例中，我将简单地使用浏览器原生的WebSocket API：
+1const useReactQuerySubscription = () =&amp;gt; { 2 React.</description></item><item><title>测试React Query</title><link>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</link><pubDate>Mon, 12 Jun 2023 23:56:57 +0800</pubDate><guid>https://xfsnowind.github.io/zh-cn/blogs/react-query/testing-react-query/</guid><description>
 本文翻译自 TkDodo 的 Testing React Query
 谈到测试，经常会和React Query一起出现一些问题，所以我将在这里尝试回答其中的一些问题。我认为其中一个原因是测试“智能”组件（也称为容器组件）并不是一件容易的事情。随着hooks的兴起，这种分离已经大部分过时。现在倾向于直接在需要它们的地方使用hooks，而不是进行主要是随意地分离并向下传递props。
 我认为这通常是一个非常好的改进，有助于集中放置和代码可读性，但现在更多组件会去消耗props之外的依赖项。
