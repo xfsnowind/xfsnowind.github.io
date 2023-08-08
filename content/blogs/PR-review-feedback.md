@@ -174,3 +174,11 @@ const parsed: CoachingDashboardFilterType.ParsedEvent = {
 }
 return parsed
 ```
+
+## Form
+
+### Not recommend to use onChange to update the form field value in react-hook-form
+
+When we use the [react-hook-form's Controller](https://react-hook-form.com/api/usecontroller/controller/) to 
+
+![react-hook-form's onChange not support Typescript well](/images/pr-reviews/rhf-onchange.png "react-hook-form's onChange not support Typescript well")
