@@ -46,7 +46,7 @@ export const useTodos = () => {
 
 假设我们想要在查询中添加排序功能。我喜欢自底向上地处理这些问题 - 从 `queryFn` 开始，让编译器告诉我接下来需要修改什么：
 
-```ts:title=sorting-todos {1,4,6}
+```ts:title=sorting-todos
 type Sorting = 'dateCreated' | 'name'
 const fetchTodos = async (
   state: State,
@@ -59,7 +59,7 @@ const fetchTodos = async (
 
 这肯定会在我们调用 `fetchTodos` 的自定义钩子中产生一个错误，所以让我们来修复它：
 
-```ts:title=useTodos-with-sorting {2,8}
+```ts:title=useTodos-with-sorting
 export const useTodos = () => {
   const { state, sorting } = useTodoParams()
 
@@ -99,7 +99,7 @@ React Query 使用该对象向 `queryFn` 注入关于查询的信息。在无限
 
 然而，这个上下文还包含了用于此查询的 `queryKey`（我们将在上下文中添加更多的有趣功能），这意味着实际上你不需要闭包来处理这些内容，因为 React Query 将为你提供它们：
 
-```js:title=query-function-context {1,3,12-15}
+```js:title=query-function-context
 const fetchTodos = async ({ queryKey }) => {
   // 🚀 我们可以从 queryKey 中获取所有的参数
   const [, state, sorting] = queryKey
@@ -124,7 +124,7 @@ export const useTodos = () => {
 
 其中一个目标是通过使用传递给 `useQuery` 的 `queryKey` 来完全获得类型安全，并推断出 `QueryFunctionContext` 的类型。这并不容易，但自从 [v3.13.3](https://github.com/tannerlinsley/react-query/releases/tag/v3.13.3) 起，React Query 就支持了这一点。如果内联使用 `queryFn`，你会发现类型会被正确推断出来（感谢泛型）：
 
-```ts:title=query-key-type-inference {6,9}
+```ts:title=query-key-type-inference
 export const useTodos = () => {
   const { state, sorting } = useTodoParams()
 
@@ -150,7 +150,7 @@ export const useTodos = () => {
 
 这就是查询键工厂再次发挥作用的地方。如果我们有一个类型安全的查询键工厂来构建我们的键，我们可以使用该工厂的返回类型来为我们的 `QueryFunctionContext` 添加类型。以下是可能的实现方式：
 
-```ts:title=typed-query-function-context {11,12,21-24}
+```ts:title=typed-query-function-context
 const todoKeys = {
   all: ['todos'] as const,
   lists: () => [...todoKeys.all, 'list'] as const,
@@ -195,7 +195,7 @@ const [, , state, sorting] = queryKey
 
 记住这一点，这是我根据我现在所了解的情况如何构建查询键的方式：
 
-```ts:title=object-keys {3-6,11}
+```ts:title=object-keys
 const todoKeys = {
   // ✅ 所有键都是包含一个对象的数组
   all: [{ scope: 'todos' }] as const,

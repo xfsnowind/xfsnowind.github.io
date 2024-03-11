@@ -20,7 +20,7 @@ These days when I handle the image in the frontend, there are some concepts make
 
 `ArrayBuffer` is an build-in object in Javascript that represents a generic, fixed-length binary data buffer. It can be used to hold raw binary data that can be accessed with types like `Int8Array`, `Unit8Arrray`, `Float32Array` and etc. ArrayBuffer is normally used to work with binary data, such as binary files and sending files over network.
 
-But you cannot manipulate the ArrayBuffer data directly, instead, you need a typed array object or `DataView` object to read or write the content of the buffer. 
+But you cannot manipulate the ArrayBuffer data directly, instead, you need a typed array object or `DataView` object to read or write the content of the buffer.
 
 ```js
 const buffer = new ArrayBuffer(8);
@@ -108,7 +108,6 @@ const blob = await base64Response.blob();
 
 Buffer is Nodejs platform based object, it's mostly used to transfer data. But sometimes we use Blob in the frontend and send to the backend, so we need to convert Blob to Buffer. We have two options to do this:
 
-
 ```js
 const arrayBuffer = await blob.arrayBuffer();
 const buffer = Buffer.from(arrayBuffer);
@@ -146,7 +145,7 @@ With given url, we can display it directly in the html page by assign it to the 
 
 ### Blob Url
 
-But what about the file uploaded? 
+But what about the file uploaded?
 
 Then we need to use `Blob` url. `Blob` URLs can only be generated internally by the browser. [`URL.createObjectURL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL) will create a special reference to the `Blob` or `File` object which later can be released using `URL.revokeObjectURL()`. These URLs can only be used locally in the single instance of the browser and in the same session.
 
@@ -157,7 +156,7 @@ const img = document.createElement('img');
 img.src = imageUrl; // blob:XXX...
 ```
 
-If you need to pass the file object through different routes, like jump with link in the same page, besides save the file on the global place, like `windonw` or localStorage, sessionStorage, we can also pass the file through url's query parameter 
+If you need to pass the file object through different routes, like jump with link in the same page, besides save the file on the global place, like `windonw` or localStorage, sessionStorage, we can also pass the file through url's query parameter
 
 # Communication with server
 
@@ -166,6 +165,7 @@ If you need to pass the file object through different routes, like jump with lin
 There are several ways to send and receive file from server:
 
 1. `HTML Form`: One common way to upload files to a server is using an HTML form with an input field of type file. When the form is submitted, the browser sends a `multipart/form-data` request to the server, which can then process the uploaded file(s) as part of the request payload.
+
 ```js
 <form id="uploadbanner" enctype="multipart/form-data" method="post" action="#">
    <input id="fileupload" name="myfile" type="file" />
@@ -174,6 +174,7 @@ There are several ways to send and receive file from server:
 ```
 
 2. `FormData`: You can also use the `Fetch API` or `XMLHttpRequest` to send files to a server using FormData. The FormData object lets you build a set of key-value pairs that represent form fields and their values, including file inputs.
+
 ```js
 const formData = new FormData();
 formData.append('imageFile', file, file.name);
@@ -181,6 +182,7 @@ formData.append('imageFile', file, file.name);
 const response = await fetch(url, { method: 'POST', body: formData });
 const json = await response.json();
 ```
+
 3. `WebSocket`: If you need real-time file transfer, you can use WebSockets to establish a persistent connection between the client and server. You can then send file data through the WebSocket connection as a binary stream.
 
 ## Receive By Backend
