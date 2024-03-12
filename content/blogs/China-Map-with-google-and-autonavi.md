@@ -49,7 +49,9 @@ To simplify the work, we would not use Baidu map since it has its own offset alg
 
 It looks like this:
 
-![Autonavi-within-leaflet](/images/chinese-map/autonavi-roadmap-map.png "Autonavi roadmap within leaflet")
+<div style="text-align:center;">
+  <img src="/images/chinese-map/autonavi-roadmap-map.png" alt="Autonavi roadmap within leaflet" width="400"/>
+</div>
 
 ## HongKong and Macau in Google Map
 
@@ -149,6 +151,10 @@ export function isPointInPolygon(
 
 ## China Mainland is swallowed by HongKong in the border
 
-![China-hk-border-google](/images/chinese-map/China-hk-google-border.png "China Mainland Border is swallowed by Hongkong")
+<div style="text-align:center;">
+  <img src="/images/chinese-map/China-hk-google-border.png" alt="China Mainland Border is swallowed by Hongkong" width="400"/>
+</div>
 
-![China-hk-border-amap](/images/chinese-map/China-hk-amap-border.png "The correct mainland and hongkong border")
+<div style="text-align:center;">
+  <img src="/images/chinese-map/China-hk-amap-border.png" alt="The correct mainland and hongkong border" width="400"/>
+</div>
