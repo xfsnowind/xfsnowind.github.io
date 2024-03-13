@@ -65,6 +65,12 @@ There is one exception for Google map, according to [Wikipedia](https://en.wikip
 
 The consequence would be no conversation is required if the coordinate(s) are created based on the google's street map (roadmap), such as `Point of interest` or `Geofences`. And also the map type switching also needs to consider the conversion.
 
+And for the hybrid type map, it would be combined by the street map with GCJ and satellite with WGS: 
+
+<div style="text-align:center;">
+  <img src="/images/chinese-map/China-google-hybrid.png" alt="Google hybrid map in China Mainland" width="600"/>
+</div>
+
 ## How to check if a coordinate is in an closed region
 
 Now we have one coordinate already, how could we check if it's inside of Mainland, Hongkong or Macau? One way would be calling map provider's API, the answer would be accurate, but the down side is it's asynchronous, which would increase the complexity of the codes. Is it possible to check the coordinate synchronously?
@@ -149,12 +155,26 @@ export function isPointInPolygon(
 }
 ```
 
+**NOTE**: There is one thing we need to be careful. According to the [turf](https://github.com/Turfjs/turf?tab=readme-ov-file#data-in-turf):
+
+<div style="text-align:center;">
+  <img src="/images/chinese-map/turf-wgs.png" alt="Use Turf" width="600"/>
+</div>
+
+The coordinate sent to turf has to be `WGS` standard.
+
 ## China Mainland is swallowed by HongKong in the border
 
+There is one more thing we need to consider when using google map in China mainland. Because of two coordinate systems in Mainland and Hongkong/Macau, the border between them is twisted:
+
+The border in Google map:
 <div style="text-align:center;">
   <img src="/images/chinese-map/China-hk-google-border.png" alt="China Mainland Border is swallowed by Hongkong" width="600"/>
 </div>
 
+The border in Autonavi:
 <div style="text-align:center;">
   <img src="/images/chinese-map/China-hk-amap-border.png" alt="The correct mainland and hongkong border" width="600"/>
 </div>
+
+You can see the Mainland border is swallowed by HongKong, which would cause the overlapping of the maps and confusion of the point or path lines above it.
