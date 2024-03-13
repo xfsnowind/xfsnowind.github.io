@@ -10,16 +10,6 @@ draft: false
 
 These days I am investigating the map used in Hongkong and China mainland since it uses the different standard according to Chinese law. There are some several interesting points can be discussed here:
 
-- [Chinese Coordinate System GCJ-02 vs GPS WGS-84](#chinese-coordinate-system-gcj-02-vs-gps-wgs-84)
-- [HongKong and Macau in Google Map](#hongkong-and-macau-in-google-map)
-- [GCJ-02 in Google Map](#gcj-02-in-google-map)
-- [How to check if a coordinate is in an closed region](#how-to-check-if-a-coordinate-is-in-an-closed-region)
-  - [GeoJson data](#geojson-data)
-  - [Pre-handling](#pre-handling)
-  - [Extract the outermost border coordinates](#extract-the-outermost-border-coordinates)
-  - [Checking if a coordinate is inside of a polygon](#checking-if-a-coordinate-is-inside-of-a-polygon)
-- [China Mainland is swallowed by HongKong in the border](#china-mainland-is-swallowed-by-hongkong-in-the-border)
-
 ## Chinese Coordinate System GCJ-02 vs GPS WGS-84
 
 Today most of the world uses the World Geodetic System WGS-84, where 84 is the latest vision of the standard applied in 1984. It's definitely created by US and used by GPS, and apparently google uses this standard for its map.
@@ -65,7 +55,7 @@ There is one exception for Google map, according to [Wikipedia](https://en.wikip
 
 The consequence would be no conversation is required if the coordinate(s) are created based on the google's street map (roadmap), such as `Point of interest` or `Geofences`. And also the map type switching also needs to consider the conversion.
 
-And for the hybrid type map, it would be combined by the street map with GCJ and satellite with WGS: 
+And for the hybrid type map, it would be combined by the street map with GCJ and satellite with WGS:
 
 <div style="text-align:center;">
   <img src="/images/chinese-map/China-google-hybrid.png" alt="Google hybrid map in China Mainland" width="600"/>
