@@ -51,7 +51,7 @@ What about Hongkong and Macau? As China applies the [One country, two systems](h
 
 There is one exception for Google map, according to [Wikipedia](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China):
 
-> Google has worked with Chinese location-based service provider AutoNavi since 2006 to source its maps in China.[44] Google uses GCJ-02 data for the street map, but does not shift the satellite imagery layer, which continues to use WGS-84 coordinates,[45] with the benefit that WGS-84 positions can still be overlaid correctly on the satellite image (but not the street map). Google Earth also uses WGS-84 to display the satellite imagery.
+> Google has worked with Chinese location-based service provider AutoNavi since 2006 to source its maps in China.[44] **Google uses GCJ-02** data for the **street map**, but **does not shift the satellite** imagery layer, which continues to use **WGS-84 coordinates**,[45] with the benefit that WGS-84 positions can still be overlaid correctly on the satellite image (but not the street map). **Google Earth also uses WGS-84 to display the satellite imagery**.
 
 The consequence would be no conversation is required if the coordinate(s) are created based on the google's street map (roadmap), such as `Point of interest` or `Geofences`. And also the map type switching also needs to consider the conversion.
 
